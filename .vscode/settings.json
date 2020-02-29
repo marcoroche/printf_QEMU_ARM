@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.tpp": "cpp",
+        "uart_hw.h": "c"
+    },
+    //"terminal.integrated.shell.windows": "wsl.exe"
+    //"terminal.integrated.shell.windows": "bash.exe"
+    //"terminal.integrated.shell.windows": "powershell.exe"
+    "terminal.integrated.shell.windows": "cmd.exe"
+}

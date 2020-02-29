@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "My ARM install",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/ProgramData/chocolatey/lib/gcc-arm-embedded/tools/arm-none-eabi/include/*",
+                "/ProgramData/chocolatey/lib/gcc-arm-embedded/tools/lib/gcc/arm-none-eabi/7.3.1/include/*"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "intelliSenseMode": "msvc-x64",
+            "cStandard": "c99"
+        }
+    ],
+    "version": 4
+}
