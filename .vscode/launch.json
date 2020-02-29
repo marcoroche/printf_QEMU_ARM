@@ -14,6 +14,8 @@
             "externalConsole": false,
             "MIMode": "gdb",
             "miDebuggerPath": "arm-none-eabi-gdb.exe",
+            //"filterStdout":
+            //"filterStderr": 
             //"miDebuggerServerAddress": "localhost:1234",
             //"targetArchitecture": "arm", deprecated
             "logging": {

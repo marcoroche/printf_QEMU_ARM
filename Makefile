@@ -24,7 +24,7 @@ all: $(BIN)/$(EXECUTABLE)
 run: clean all
 	cls
 #	if exist q:\ ( echo Q Drive already set ) else subst Q: "C:\Program Files\qemu"
-	qemu-system-arm -machine xilinx-zynq-a9 -cpu cortex-a9 -s -m 512M -serial stdio -kernel $(BIN)/$(EXECUTABLE)
+	qemu-system-arm -machine xilinx-zynq-a9 -cpu cortex-a9 -s -m 512M -serial stdio -serial telnet:localhost:4321,server,nowait -kernel $(BIN)/$(EXECUTABLE)
 
 $(LIB)/$(ENTRY).o: $(SRC)/$(ENTRY).s
 	echo "GENERATING ENTRY POINT"

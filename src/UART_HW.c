@@ -2,6 +2,7 @@
 #include <errno.h>
 //#include <sys/errno.h>
 #include "UART_HW.h"
+#include "TTY_conf.h"
 
 void UartEnable(UART_Registers *uart)
 {

@@ -3,7 +3,7 @@ The classic model, used in pre-Cortex chip and current Cortex-A/R chips. In it, 
 
  Offset  Handler
  ===============
- 00      Reset 
+ 00      Reset
  04      Undefined Instruction
  08      Supervisor Call (SVC)
  0C      Prefetch Abort

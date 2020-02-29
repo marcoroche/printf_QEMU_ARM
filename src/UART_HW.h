@@ -244,163 +244,71 @@ typedef struct
 /* @} */
 
 /** @name Modem Status Register
-
  *
-
  * This register (MODEMSR) indicates the current state of the control lines
-
  * from a modem, or another peripheral device, to the CPU. In addition, four
-
  * bits of the modem status register provide change information. These bits
-
  * are set to a logic 1 whenever a control input from the modem changes state.
-
  *
-
  * Note: Whenever the DCTS, DDSR, TERI, or DDCD bit is set to logic 1, a modem
-
  * status interrupt is generated and this is reflected in the modem status
-
  * register.
-
  *
-
  * @{
-
  */
 
 #define UART_MODEMSR_FCMS 0x00000100 /**< Flow control mode (FCMS) */
-
 #define UART_MODEMSR_DCD 0x00000080 /**< Complement of DCD input */
-
 #define UART_MODEMSR_RI 0x00000040 /**< Complement of RI input */
-
 #define UART_MODEMSR_DSR 0x00000020 /**< Complement of DSR input */
-
 #define UART_MODEMSR_CTS 0x00000010 /**< Complement of CTS input */
-
 #define UART_MEDEMSR_DCDX 0x00000008 /**< Delta DCD indicator */
-
 #define UART_MEDEMSR_RIX 0x00000004 /**< Change of RI */
-
 #define UART_MEDEMSR_DSRX 0x00000002 /**< Change of DSR */
-
 #define UART_MEDEMSR_CTSX 0x00000001 /**< Change of CTS */
-
 /* @} */
-
 /** @name Channel Status Register
-
  *
-
  * The channel status register (CSR) is provided to enable the control logic
-
  * to monitor the status of bits in the channel interrupt status register,
-
  * even if these are masked out by the interrupt mask register.
-
  *
-
  * @{
-
  */
-
 #define UART_SR_FLOWDEL 0x00001000 /**< RX FIFO fill over flow delay */
-
 #define UART_SR_TACTIVE 0x00000800 /**< TX active */
-
 #define UART_SR_RACTIVE 0x00000400 /**< RX active */
-
 #define UART_SR_DMS 0x00000200 /**< Delta modem status change */
-
 #define UART_SR_TOUT 0x00000100 /**< RX timeout */
-
 #define UART_SR_PARITY 0x00000080 /**< RX parity error */
-
 #define UART_SR_FRAME 0x00000040 /**< RX frame error */
-
 #define UART_SR_OVER 0x00000020 /**< RX overflow error */
-
 #define UART_SR_TXFULL 0x00000010 /**< TX FIFO full */
-
 #define UART_SR_TXEMPTY 0x00000008 /**< TX FIFO empty */
-
 #define UART_SR_RXFULL 0x00000004 /**< RX FIFO full */
-
 #define UART_SR_RXEMPTY 0x00000002 /**< RX FIFO empty */
-
 #define UART_SR_RXOVR 0x00000001 /**< RX FIFO fill over trigger */
-
 /* @} */
-
 /** @name Flow Delay Register
-
  *
-
  * Operation of the flow delay register (FLOWDEL) is very similar to the
-
  * receive FIFO trigger register. An internal trigger signal activates when the
-
  * FIFO is filled to the level set by this register. This trigger will not
-
  * cause an interrupt, although it can be read through the channel status
-
  * register. In hardware flow control mode, RTS is deactivated when the trigger
-
  * becomes active. RTS only resets when the FIFO level is four less than the
-
  * level of the flow delay trigger and the flow delay trigger is not activated.
-
  * A value less than 4 disables the flow delay.
-
  * @{
-
  */
 #define UART_FLOWDEL_MASK UART_RXWM_MASK /**< Valid bit mask */
 /* @} */
 
-/** @name Base Address of UART0
- *
- * The base address of UART0
- */
+/** Base Address of UART0 & UART 1 **/
 #define UART0_BASE 0xE0000000
-/** @name Base Address of UART1
- *
- * The base address of UART1
- */
 #define UART1_BASE 0xE0001000
-#define UART0 ((UART_Registers *)UART0_BASE)
-#define UART1 ((UART_Registers *)UART1_BASE)
 
 /****************************************************************************/
-
-/**
-
-* Determine if there is receive data in the receiver and/or FIFO.
-
-*
-
-* @param    BaseAddress contains the base address of the device.
-
-*
-
-* @return    TRUE if there is receive data, FALSE otherwise.
-
-*
-
-* @note        C-Style signature:
-
-*        uint32_t UartDataReceived(uint32_t BaseAddress)
-
-*
-
-******************************************************************************/
-#define UartDataReceived(BaseAddress)            \
-    !((io_in32((BaseAddress) + UART_SR_OFFSET) & \
-       UART_SR_RXEMPTY) == UART_SR_RXEMPTY)
-
-/****************************************************************************/
-
 /**
 * Determine if a byte of data can be sent with the transmitter.
 *
