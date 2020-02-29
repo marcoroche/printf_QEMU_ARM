@@ -187,7 +187,7 @@ Disassembly of section .text:
      204:	e59d2008 	ldr	r2, [sp, #8]
      208:	e59d1014 	ldr	r1, [sp, #20]
      20c:	e1a00003 	mov	r0, r3
-     210:	fa000234 	blx	ae8 <fiprintf>
+     210:	fa000371 	blx	fdc <vfiprintf>
      214:	e30331ac 	movw	r3, #12716	; 0x31ac
      218:	e3403000 	movt	r3, #0
      21c:	e5933000 	ldr	r3, [r3]

@@ -27,7 +27,7 @@ void Console(int level, const char *szMess, ...)
         break;
     }
     fprintf(stderr, strStartColor);
-    fprintf(stderr, szMess, args);
+    vfprintf(stderr, szMess, args);
     va_end(args);
     fprintf(stderr, SHELL_FORMAT_RESET);
 }
