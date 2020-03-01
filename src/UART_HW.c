@@ -1,8 +1,4 @@
-#include <unistd.h>
-#include <errno.h>
-//#include <sys/errno.h>
 #include "UART_HW.h"
-#include "TTY_conf.h"
 
 void UartEnable(UART_Registers *uart)
 {
@@ -41,64 +37,3 @@ char Zynq7000_UART_GETCHAR(UART_Registers *pUART)
     return 0;
 }
 
-int _write(int file, char *ptr, int len)
-{
-    int n;
-    switch (file)
-    {
-    case STDOUT_FILENO: /*stdout*/
-        for (n = 0; n < len; n++)
-        {
-            Zynq7000_UART_SENDCHAR((UART_Registers *)UART0_BASE, *ptr++);
-        }
-        break;
-    case STDERR_FILENO: /* stderr */
-        for (n = 0; n < len; n++)
-        {
-            Zynq7000_UART_SENDCHAR((UART_Registers *)UART1_BASE, *ptr++);
-        }
-        break;
-    default:
-        errno = EBADF;
-        return -1;
-    }
-    return len;
-}
-
-int _read(int file, char *ptr, int len)
-{
-    int n;
-    int num = 0;
-    switch (file)
-    {
-    case STDIN_FILENO:
-        for (n = 0; n < len; n++)
-        {
-            char c;
-            c = Zynq7000_UART_GETCHAR((UART_Registers *)UART0_BASE);
-            /* echo the carater on the stdout */ 
-            Zynq7000_UART_SENDCHAR((UART_Registers *)UART0_BASE, c);
-            *ptr++ = c;
-            num++;
-            /* ascii code 10, 13 or both 10 and 13*/
-            if ( c == '\r') {
-                if (++n < len){
-                    c='\n';
-                    Zynq7000_UART_SENDCHAR((UART_Registers *)UART0_BASE, c);
-                    *ptr++ = '\n';
-                    num++;                
-                }
-                break;                
-            }
-            else if (c == '\n' ) 
-            {
-                break;
-            }
-        }
-        break;
-    default:
-        errno = EBADF;
-        return -1;
-    }
-    return num;
-}

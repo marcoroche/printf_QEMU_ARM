@@ -127,122 +127,66 @@ typedef struct
 #define UART_BAUDGEN_DISABLE 0x00000000 /**< Disable clock */
 #define UART_BAUDGEN_MASK 0x0000FFFF    /**< Valid bits mask */
 /* @} */
-
 /** @name Baud Divisor Rate register
  *
-
  * The baud rate divider register (BDIV) controls how much the bit sample
-
  * rate is divided by. It sets the baud rate.
-
  * Valid values are 0x04 to 0xFF. Writing a value less than 4 will be ignored.
-
  *
-
  * Baud rate = CCLK / ((BAUDDIV + 1) x BRGR), where the CCLK is selected by
-
  * the MR_CCLK bit in the MR register.
-
  * @{
-
  */
 
 #define UART_BAUDDIV_MASK 0x000000FF /**< 8 bit baud divider mask */
-
 /* @} */
-
 /*
-
     Page 496
-
     Simplifyed Table 19-1 UART Parameter Value Examples
-
     Parameter Value Examples
-
     Clock                Baud  BRGR-CD   BDIV-CD                    Actual Baud Rate
-
     UART Ref clock        600   10417     7
-
     UART Ref clock      9,600     651     7
-
     UART Ref clock     28,800     347     4
-
     UART Ref clock    115,200      62     6
-
     UART Ref clock    230,400      31     6
-
 */
 
 /*Baudrates assuming input clock speed is 3125000L */
-
 /*Baud_rate_gen_reg0*/
-
 #define UART_BAUDGEN_115200 62 /*Baud Rate Clock Divisor*/
-
 /*Register Baud_rate_divider_reg0 Details*/
-
 #define UART_BAUDDIV_115200 6 /*Baud Rate Clock Divisor*/
-
 /** @name Receiver Timeout Register
-
  *
-
  * Use the receiver timeout register (RTR) to detect an idle condition on
-
  * the receiver data line.
-
  *
-
  * @{
-
  */
-
 #define UART_RXTOUT_DISABLE 0x00000000 /**< Disable time out */
-
 #define UART_RXTOUT_MASK 0x000000FF /**< Valid bits mask */
-
 /* @} */
-
 /** @name Receiver FIFO Trigger Level Register
-
  *
-
  * Use the Receiver FIFO Trigger Level Register (RTRIG) to set the value at
-
  * which the RX FIFO triggers an interrupt event.
-
  * @{
-
  */
-
 #define UART_RXWM_DISABLE 0x00000000 /**< Disable RX trigger interrupt */
-
 #define UART_RXWM_MASK 0x0000003F /**< Valid bits mask */
-
 /* @} */
-
 /** @name Modem Control Register
-
  *
-
  * This register (MODEMCR) controls the interface with the modem or data set,
-
  * or a peripheral device emulating a modem.
-
  *
-
  * @{
-
  */
-
 #define UART_MODEMCR_FCM 0x00000010 /**< Flow control mode */
-
 #define UART_MODEMCR_RTS 0x00000002 /**< Request to send */
-
 #define UART_MODEMCR_DTR 0x00000001 /**< Data terminal ready */
-
 /* @} */
-
 /** @name Modem Status Register
  *
  * This register (MODEMSR) indicates the current state of the control lines
