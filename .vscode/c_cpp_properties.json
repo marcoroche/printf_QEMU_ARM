@@ -5,6 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/ProgramData/chocolatey/lib/gcc-arm-embedded/tools/arm-none-eabi/include/*",
+                "/ProgramData/chocolatey/lib/gcc-arm-embedded/tools/arm-none-eabi/include/sys/*",
                 "/ProgramData/chocolatey/lib/gcc-arm-embedded/tools/lib/gcc/arm-none-eabi/7.3.1/include/*"
             ],
             "defines": [

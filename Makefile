@@ -1,3 +1,7 @@
+#environment variable
+#GNUARMEMB_TOOLCHAIN_PATH = C:\ProgramData\chocolatey\lib\gcc-arm-embedded\tools
+
+
 ARMGNU    := arm-none-eabi
 C_FLAGS   := -fomit-frame-pointer -ffreestanding -specs=nano.specs -specs=nosys.specs -Wall -O0 -ggdb3  -Wextra -std=c99 -mcpu=cortex-a9 -mfpu=vfpv3 -mfloat-abi=hard
 LD        := -static -TSECTIONS.ld
@@ -30,7 +34,7 @@ $(LIB)/$(ENTRY).o: $(SRC)/$(ENTRY).s
 	echo "GENERATING ENTRY POINT"
 	$(ARMGNU)-as $(SRC)/$(ENTRY).s -o $(LIB)/$(ENTRY).o
 
-$(BIN)/$(EXECUTABLE): $(SRC)/*.c $(SRC)/*.s SECTIONS.ld
+$(BIN)/$(EXECUTABLE): $(SRC)/*.c $(SRC)/*.s
 	echo "COMPILING C LEVEL" 
 	$(ARMGNU)-gcc $(C_FLAGS) -I$(INCLUDE) -L$(LIB) $^ -o $@ $(LIBRARIES)  -Xlinker $(LD) 
 	$(ARMGNU)-nm $(BIN)/$(EXECUTABLE) > $(BIN)/symbols.txt

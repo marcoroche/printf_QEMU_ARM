@@ -6,7 +6,28 @@
 #include "TTY_conf.h"
 #include "UART_HW.h"
 
+#undef ERRNO
+extern int errno;
+
 /** syscall override **/
+int _isatty(int file)
+{
+    if ((file == STDOUT_FILENO) || (file == STDIN_FILENO))
+    {
+        return 1;
+    }
+    else if (file == STDERR_FILENO)
+    {
+        errno = ENOTTY; 
+        return 0;
+    }
+    else
+    {
+        errno = EBADF;
+        return 0;
+    }
+} /* _isatty () */
+
 int _write(int file, char *ptr, int len)
 {
     int n;
@@ -42,21 +63,23 @@ int _read(int file, char *ptr, int len)
         {
             char c;
             c = Zynq7000_UART_GETCHAR((UART_Registers *)UART0_BASE);
-            /* echo the carater on the stdout */ 
+            /* echo the carater on the stdout */
             Zynq7000_UART_SENDCHAR((UART_Registers *)UART0_BASE, c);
             *ptr++ = c;
             num++;
             /* ascii code 10, 13 or both 10 and 13*/
-            if ( c == '\r') {
-                if (++n < len){
-                    c='\n';
+            if (c == '\r')
+            {
+                if (++n < len)
+                {
+                    c = '\n';
                     Zynq7000_UART_SENDCHAR((UART_Registers *)UART0_BASE, c);
                     *ptr++ = '\n';
-                    num++;                
+                    num++;
                 }
-                break;                
+                break;
             }
-            else if (c == '\n' ) 
+            else if (c == '\n')
             {
                 break;
             }
@@ -69,13 +92,12 @@ int _read(int file, char *ptr, int len)
     return num;
 }
 
-
-/* Colored stderr */ 
+/* Colored stderr */
 void Console(int level, const char *szMess, ...)
 {
     va_list args;
     va_start(args, szMess);
-    char *strStartColor = NULL ;
+    char *strStartColor = NULL;
     switch (level)
     {
     case LVL_INFO:
@@ -105,7 +127,7 @@ void Console(int level, const char *szMess, ...)
     when you compile the program. 
     Source: https://www.ibm.com/support/knowledgecenter/SSLTBW_2.2.0/com.ibm.zos.v2r2.bpxbd00/vfprtf.htm
     */
-    vfprintf(stderr, szMess, args); 
+    vfprintf(stderr, szMess, args);
     va_end(args);
     fprintf(stderr, SHELL_FORMAT_RESET);
 }
